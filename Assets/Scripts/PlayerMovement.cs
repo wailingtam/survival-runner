@@ -2,9 +2,16 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-	public float speed = 6f;
-	public float jumpHeight = 7f;
-	bool isGrounded = true;
+    private GameObject pcamera, plight;
+    private float speed = 2f;
+	private float jumpHeight = 7f;
+	public bool isGrounded = true;
+    public int direction = 0;
+    //int[] directions = new int[4] { 0, 1, 2, 3 };
+
+
+    Collider turningZone;
+    private bool hasTurned = false;
 
 	Vector3 movement;
 	Animator anim;
@@ -15,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 	float timer;
 	float timeBetweenPoints = 0.2f;
 	PlayerHealth playerHealth;
+    
 
 	//Awake is called regarless the script is enable or not. Good to set up references
 	void Awake()
@@ -23,7 +31,10 @@ public class PlayerMovement : MonoBehaviour
 		anim = GetComponent<Animator> ();
 		playerRigidbody = GetComponent<Rigidbody> ();
 		playerHealth = GetComponent <PlayerHealth> ();
-	}
+        pcamera = GameObject.Find("MainCamera");
+        plight = GameObject.Find("DirectionalLight");
+
+    }
 
 	void Update()
 	{
@@ -37,12 +48,14 @@ public class PlayerMovement : MonoBehaviour
 
 	void FixedUpdate()
 	{
+        //todo switch estats i després comprobar inputs
 		//GetAxisRaw only get -1, 0 or 1 values
 		float h = Input.GetAxisRaw ("Horizontal");
 		//float v = Input.GetAxisRaw ("Vertical");
 		float v = 1f;
 
-		if (!isGrounded && playerRigidbody.transform.position.y <= 0.1f) {
+
+        if (!isGrounded && playerRigidbody.transform.position.y <= 0.1f) {
 			isGrounded = true;
 		}
 
@@ -51,14 +64,47 @@ public class PlayerMovement : MonoBehaviour
 			isGrounded = false;
 		}
 
-		Move (h, v);
-		Turning ();
-		Animating (h, v);
+        Move(h, v);
+        //Turning();
+        //Animating(h, v);
+
+        if (Input.GetKeyDown(KeyCode.E) && turningZone != null && !hasTurned && turningZone.transform.rotation.y < 180)
+        {
+            //If I press E to turn AND I can turn AND I am not in the process AND the rotation is towards right
+            Debug.Log(transform.rotation);
+            transform.Rotate(Vector3.up, 90);
+            Debug.Log(transform.rotation);
+             var pf = pcamera.GetComponent<CameraFollow>();
+             pf.RotateLooking(30);
+            direction = (direction + 1) % 4;
+            //Debug.Log(pcamera.transform.rotation);
+            //pcamera.transform.Rotate(0,30,0);
+            //Debug.Log(pcamera.transform.rotation);
+            //pcamera.transform.Rotate(Vector3.forward, -13f);
+            //plight.transform.Rotate(Vector3.up, 30);
+            hasTurned = true;
+        }
+/*
+        if (Input.GetKeyDown(KeyCode.Q) && turningZone != null && !hasTurned && turningZone.transform.rotation.y > 180)
+        {
+            Vector3 v3 = new Vector3(0, 270, 0);
+            transform.Rotate(v3);
+            pcamera.transform.Rotate(v3);
+            plight.transform.Rotate(v3);
+            hasTurned = true;
+        }
+*/
+
 	}
 
 	void Move(float h, float v)
 	{
-		movement.Set (h, 0f, v);
+        switch (direction)
+        {
+            case 0: movement.Set(h, 0f, v); break;
+            case 1: movement.Set(v, 0f, h); break;
+        }
+		
 
 		movement = movement.normalized * speed * Time.deltaTime;
 
@@ -109,5 +155,18 @@ public class PlayerMovement : MonoBehaviour
 			DisplayManager.teddies += 1;
 			DisplayManager.score += 300;
 		} 
+        else if (other.gameObject.CompareTag("TurningZone"))
+        {
+            turningZone = other;
+            hasTurned = false;
+        }
 	}
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("TurningZone"))
+        {
+            turningZone = null;
+        }
+    }
 }

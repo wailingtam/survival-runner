@@ -7,6 +7,11 @@ TagManager:
   - Star
   - Medipack
   - Teddybear
+  - Zone
+  - ChangeZoneTrigger
+  - StartingZone
+  - endingZone
+  - TurningZone
   layers:
   - Default
   - TransparentFX
