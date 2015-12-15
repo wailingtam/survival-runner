@@ -12,10 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float smoothTime = 0.5f;
     public Vector3 velocity = Vector3.zero;
     Vector3 turnPosition;
-    enum Lane
-    {
-        left, right, middle
-    }
+    enum Lane{left, right, middle}
     Lane actualLane = Lane.middle;
     bool disableHorizontalAxis = false;
     //int[] directions = new int[4] { 0, 1, 2, 3 };
