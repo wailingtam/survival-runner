@@ -4,9 +4,14 @@ using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int startingHealth = 100;
+	public int currentHealth;
+	public Image heart1;
+	public Image heart2;
+	public Image heart3;
+	
+    /*public int startingHealth = 100;
     public int currentHealth;
-    public Slider healthSlider;
+    public Slider healthSlider;*/
     public Image damageImage;
     public AudioClip deathClip;
     public float flashSpeed = 5f;
@@ -20,7 +25,7 @@ public class PlayerHealth : MonoBehaviour
     bool isDead;
     bool damaged;
 
-	int healingAmount = 20;
+	//int healingAmount = 20;
 
     void Awake ()
     {
@@ -28,7 +33,8 @@ public class PlayerHealth : MonoBehaviour
         playerAudio = GetComponent <AudioSource> ();
         playerMovement = GetComponent <PlayerMovement> ();
         playerShooting = GetComponentInChildren <PlayerShooting> ();
-        currentHealth = startingHealth;
+        //currentHealth = startingHealth;
+		currentHealth = 3;
     }
 
 
@@ -50,9 +56,17 @@ public class PlayerHealth : MonoBehaviour
     {
         damaged = true;
 
-        currentHealth -= amount;
+		currentHealth -= amount;
 
-        healthSlider.value = currentHealth;
+		switch (currentHealth) {
+			case 2: heart3.enabled = false; break;
+			case 1: heart2.enabled = false; break;
+			case 0: heart1.enabled = false; break;
+		}
+
+        //currentHealth -= amount;
+
+        //healthSlider.value = currentHealth;
 
         playerAudio.Play ();
 
@@ -86,7 +100,7 @@ public class PlayerHealth : MonoBehaviour
 
 	public void Heal ()
 	{
-		if (currentHealth < startingHealth) {
+		/*if (currentHealth < startingHealth) {
 			if (startingHealth - currentHealth < healingAmount) {
 				currentHealth = startingHealth;
 			} else {
@@ -94,6 +108,15 @@ public class PlayerHealth : MonoBehaviour
 			}
 
 			healthSlider.value = currentHealth;
+		}*/
+		if (currentHealth < 3) {
+			currentHealth += 1;
 		}
+		
+		switch (currentHealth) {
+			case 3: heart3.enabled = true; break;
+			case 2: heart2.enabled = true; break;
+		}
+
 	}
 }

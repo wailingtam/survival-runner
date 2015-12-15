@@ -108,6 +108,9 @@ public class PlayerMovement : MonoBehaviour
 			Destroy (other.gameObject);
 			DisplayManager.teddies += 1;
 			DisplayManager.score += 300;
-		} 
+		}
+		else if (other.gameObject.CompareTag ("Present")) {
+			playerHealth.TakeDamage(3);
+		}
 	}
 }

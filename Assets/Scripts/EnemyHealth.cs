@@ -2,10 +2,10 @@
 
 public class EnemyHealth : MonoBehaviour
 {
-    public int startingHealth = 100;
+    private int startingHealth = 60;
     public int currentHealth;
     public float sinkSpeed = 2.5f;
-    public int scoreValue = 10;
+    public int scoreValue = 300;
     public AudioClip deathClip;
 
 

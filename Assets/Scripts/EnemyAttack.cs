@@ -4,8 +4,7 @@ using System.Collections;
 public class EnemyAttack : MonoBehaviour
 {
     public float timeBetweenAttacks = 0.5f;
-    public int attackDamage = 10;
-
+	int damageAmount = 1;
 
     Animator anim;
     GameObject player;
@@ -64,7 +63,7 @@ public class EnemyAttack : MonoBehaviour
 
         if(playerHealth.currentHealth > 0)
         {
-            playerHealth.TakeDamage (attackDamage);
+            playerHealth.TakeDamage (damageAmount);
         }
     }
 }

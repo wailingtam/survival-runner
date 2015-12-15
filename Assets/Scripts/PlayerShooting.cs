@@ -17,6 +17,7 @@ public class PlayerShooting : MonoBehaviour
     Light gunLight;
     float effectsDisplayTime = 0.2f;
 
+	GameObject effect;
 
     void Awake ()
     {
@@ -69,12 +70,22 @@ public class PlayerShooting : MonoBehaviour
         shootRay.direction = transform.forward;
 
         if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
-        {
-            EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
-            if(enemyHealth != null)     
-            {
-                enemyHealth.TakeDamage (damagePerShot, shootHit.point);
-            }
+		{
+			if (shootHit.collider.gameObject.CompareTag("Present")) {
+				GameObject parent = shootHit.collider.gameObject.transform.parent.gameObject;
+				effect = parent.transform.GetChild(1).gameObject;
+				effect.SetActive(true);
+				Invoke("StopEmitter", 3);
+				Destroy(shootHit.collider.gameObject);
+				DisplayManager.score += 50;
+			}
+			else {
+	            EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
+	            if(enemyHealth != null)     
+	            {
+	                enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+	            }
+			}
             gunLine.SetPosition (1, shootHit.point);
         }
         else
@@ -82,4 +93,8 @@ public class PlayerShooting : MonoBehaviour
             gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
         }
     }
+
+	void StopEmitter() {
+		effect.SetActive(false);
+	}
 }
