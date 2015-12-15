@@ -8,39 +8,45 @@ TagManager:
   - Medipack
   - Teddybear
   - Present
+  - Zone
+  - ChangeZoneTrigger
+  - StartingZone
+  - endingZone
+  - TurningZoneLeft
+  - TurningZoneRight
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  -
   - Water
   - UI
-  - 
-  - 
+  -
+  -
   - Floor
   - Shootable
   - LightMask
   - Invisible
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
+  -
   m_SortingLayers:
   - name: Default
     uniqueID: 0
