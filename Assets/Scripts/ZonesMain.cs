@@ -29,12 +29,13 @@ public class ZonesMain : MonoBehaviour {
             newV = rnd.Next(transform.childCount);
         } while (newV == activeNewZoneIndex);
         activeNewZoneIndex = newV;
-        //activeNewZoneIndex = (activeNewZoneIndex + 1) % transform.childCount;
+        //activeNewZoneIndex = (activeNewZoneIndex + 1) % 2;
         Transform child = transform.GetChild(activeNewZoneIndex);
         activeNewZone = child.gameObject;
         activeNewZone.SetActive(true);
         Transform outPos = activeOldZone.GetComponent<ZoneMain>().GetOutPos();
         activeNewZone.GetComponent<ZoneMain>().SetPos(outPos.position, outPos.rotation);
+        Debug.Log("Zone " + newV.ToString());
 
     }
 

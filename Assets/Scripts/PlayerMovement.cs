@@ -3,10 +3,21 @@
 public class PlayerMovement : MonoBehaviour
 {
     private GameObject pcamera, plight;
-    private float speed = 2f;
-	private float jumpHeight = 7f;
-	public bool isGrounded = true;
+    private float speed = 8f;
+	private float jumpHeight = 15f;
+    private float MARGIN = 8f;
+    public bool isGrounded = true;
     public int direction = 0;
+
+    public float smoothTime = 0.5f;
+    public Vector3 velocity = Vector3.zero;
+    Vector3 turnPosition;
+    enum Lane
+    {
+        left, right, middle
+    }
+    Lane actualLane = Lane.middle;
+    bool disableHorizontalAxis = false;
     //int[] directions = new int[4] { 0, 1, 2, 3 };
 
 
@@ -50,8 +61,6 @@ public class PlayerMovement : MonoBehaviour
 	{
         //todo switch estats i després comprobar inputs
 		//GetAxisRaw only get -1, 0 or 1 values
-		float h = Input.GetAxisRaw ("Horizontal");
-		//float v = Input.GetAxisRaw ("Vertical");
 		float v = 1f;
 
 
@@ -64,53 +73,70 @@ public class PlayerMovement : MonoBehaviour
 			isGrounded = false;
 		}
 
-        Move(h, v);
-        //Turning();
-        //Animating(h, v);
-
-        if (Input.GetKeyDown(KeyCode.E) && turningZone != null && !hasTurned && turningZone.transform.rotation.y < 180)
+        if(turningZone != null && !hasTurned)
         {
-            //If I press E to turn AND I can turn AND I am not in the process AND the rotation is towards right
-            Debug.Log(transform.rotation);
-            transform.Rotate(Vector3.up, 90);
-            Debug.Log(transform.rotation);
-             var pf = pcamera.GetComponent<CameraFollow>();
-             pf.RotateLooking(30);
-            direction = (direction + 1) % 4;
-            //Debug.Log(pcamera.transform.rotation);
-            //pcamera.transform.Rotate(0,30,0);
-            //Debug.Log(pcamera.transform.rotation);
-            //pcamera.transform.Rotate(Vector3.forward, -13f);
-            //plight.transform.Rotate(Vector3.up, 30);
-            hasTurned = true;
-        }
-/*
-        if (Input.GetKeyDown(KeyCode.Q) && turningZone != null && !hasTurned && turningZone.transform.rotation.y > 180)
-        {
-            Vector3 v3 = new Vector3(0, 270, 0);
-            transform.Rotate(v3);
-            pcamera.transform.Rotate(v3);
-            plight.transform.Rotate(v3);
-            hasTurned = true;
-        }
-*/
+            if (Input.GetKeyDown(KeyCode.D) && turningZone.gameObject.CompareTag("TurningZoneRight"))
+            {
+                transform.Rotate(Vector3.up, 90);
+                direction = (direction + 1) % 4;
+                hasTurned = true;
+            }
+            else if(Input.GetKeyDown(KeyCode.A) && turningZone.gameObject.CompareTag("TurningZoneLeft")){
+                transform.Rotate(Vector3.up, -90);
+                direction = (direction - 1) % 4;
+                hasTurned = true;
 
-	}
+            }
+            if (hasTurned) // Do common stuff
+            {
+                Debug.Log("Turning!");
+                transform.position = turningZone.transform.position;
+                velocity = Vector3.zero;
+            }
+            
+        }
 
-	void Move(float h, float v)
+        
+        Turning();
+        Animating(v);
+        Move(Input.GetKey(KeyCode.A), Input.GetKey(KeyCode.D), v);
+
+
+    }
+
+	void Move(bool a, bool d, float v)
 	{
+        float marginToDo = 0;
+        if (disableHorizontalAxis) actualLane = Lane.middle;
+        else
+        {
+            if (a && !d && actualLane != Lane.left)
+            {
+                marginToDo = -MARGIN;
+                actualLane = Lane.left;
+            }
+            else if (d && !a && actualLane != Lane.right)
+            {
+                marginToDo = MARGIN;
+                actualLane = Lane.right;
+            }
+            else if (actualLane != Lane.middle)
+            {
+                marginToDo = actualLane == Lane.left ? MARGIN : -MARGIN;
+                actualLane = Lane.middle;
+            }
+        }
         switch (direction)
         {
-            case 0: movement.Set(h, 0f, v); break;
-            case 1: movement.Set(v, 0f, h); break;
+            case 0: movement.Set(marginToDo, 0f, v); break;
+            case 1: movement.Set(v, 0f, -marginToDo); break;
+            case 2: movement.Set(-marginToDo, 0f, -v); break;
+            default: movement.Set(-v, 0f, marginToDo); break;
         }
-		
+		movement = movement * speed;
+        playerRigidbody.MovePosition (Vector3.SmoothDamp(transform.position, transform.position + movement, ref velocity, smoothTime));
 
-		movement = movement.normalized * speed * Time.deltaTime;
-
-		playerRigidbody.MovePosition (transform.position + movement);
-
-	}
+    }
 
 	void Turning ()
 	{
@@ -129,10 +155,10 @@ public class PlayerMovement : MonoBehaviour
 		}
 	}
 
-	void Animating (float h, float v)
+	void Animating (float v)
 	{
 		if (isGrounded) {
-			bool walking = h != 0f || v != 0f;
+			bool walking = v != 0f;
 			anim.SetBool ("IsWalking", walking);
 		} else {
 			anim.SetBool ("IsWalking", false);
@@ -155,17 +181,22 @@ public class PlayerMovement : MonoBehaviour
 			DisplayManager.teddies += 1;
 			DisplayManager.score += 300;
 		} 
-        else if (other.gameObject.CompareTag("TurningZone"))
+        else if (other.gameObject.CompareTag("TurningZoneLeft") || other.gameObject.CompareTag("TurningZoneRight"))
         {
+            disableHorizontalAxis = true;
             turningZone = other;
             hasTurned = false;
+            turnPosition = other.gameObject.transform.position - (other.gameObject.transform.position - transform.position) / 4;
+            Debug.Log("turning zone in");
         }
 	}
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("TurningZone"))
+        if (other.gameObject.CompareTag("TurningZoneLeft") || other.gameObject.CompareTag("TurningZoneRight"))
         {
+            Debug.Log("turning zone out");
+            disableHorizontalAxis = false;
             turningZone = null;
         }
     }

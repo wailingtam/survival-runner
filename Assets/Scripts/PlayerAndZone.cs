@@ -7,7 +7,8 @@ public class PlayerAndZone : MonoBehaviour {
     private ZonesMain script;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+        zones = GameObject.Find("Zones");
         script = zones.GetComponent<ZonesMain>();
 	}
 	
@@ -21,10 +22,8 @@ public class PlayerAndZone : MonoBehaviour {
         switch (other.gameObject.name)
         {
             case "ZoneOut":
-                Debug.Log("zone out triggered");
                 script.ActivateZone(); break;
             case "ZoneIn":
-                Debug.Log("zone in triggered");
                 script.DeactivateZone(); break;     
         }
     }

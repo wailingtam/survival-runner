@@ -11,7 +11,8 @@ TagManager:
   - ChangeZoneTrigger
   - StartingZone
   - endingZone
-  - TurningZone
+  - TurningZoneLeft
+  - TurningZoneRight
   layers:
   - Default
   - TransparentFX
