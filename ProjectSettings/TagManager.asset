@@ -5,48 +5,48 @@ TagManager:
   serializedVersion: 2
   tags:
   - Star
+  - Player
   - Medipack
-  - Teddybear
+  - Obstacle
   - Present
-  - Zone
-  - ChangeZoneTrigger
-  - StartingZone
-  - endingZone
+  - TeddyBear
   - TurningZoneLeft
   - TurningZoneRight
+  - Zone
+  - Teddybear
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  -
+  - 
   - Water
   - UI
-  -
-  -
+  - 
+  - 
   - Floor
   - Shootable
   - LightMask
   - Invisible
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
-  -
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0

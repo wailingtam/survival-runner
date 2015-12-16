@@ -2,7 +2,7 @@
 
 public class GameOverManager : MonoBehaviour
 {
-    public PlayerHealth playerHealth;
+    private PlayerHealth playerHealth;
 	public float restartDelay = 5f;
 
 
@@ -12,6 +12,7 @@ public class GameOverManager : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
     }
 
 

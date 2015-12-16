@@ -23,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
 	Vector3 movement;
 	Animator anim;
-	Rigidbody playerRigidbody;
+    private float playerVerticalSize;
+    Rigidbody playerRigidbody;
 	int floorMask;
 	float camRayLength = 100f; //Length of the ray we cast from the camera
 	
@@ -41,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
 		playerHealth = GetComponent <PlayerHealth> ();
         pcamera = GameObject.Find("MainCamera");
         plight = GameObject.Find("DirectionalLight");
+        playerVerticalSize = (float) gameObject.GetComponent<CapsuleCollider>().bounds.size.y;
 
     }
 
@@ -60,17 +62,17 @@ public class PlayerMovement : MonoBehaviour
 		//GetAxisRaw only get -1, 0 or 1 values
 		float v = 1f;
 
+        int platformLayer = LayerMask.NameToLayer("Floor");
+        //Only hit the platform layer
+        int layerMask = 1 << platformLayer;
+        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, 4f , layerMask);
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            playerRigidbody.velocity = new Vector3(0, jumpHeight, 0);
+            isGrounded = false;
+        }
 
-        if (!isGrounded && playerRigidbody.transform.position.y <= 0.1f) {
-			isGrounded = true;
-		}
-
-		if (Input.GetButtonDown ("Jump") && isGrounded) {
-			playerRigidbody.velocity = new Vector3 (0, jumpHeight, 0);
-			isGrounded = false;
-		}
-
-        if(turningZone != null && !hasTurned)
+        if (turningZone != null && !hasTurned)
         {
             if (Input.GetKeyDown(KeyCode.D) && turningZone.gameObject.CompareTag("TurningZoneRight"))
             {
