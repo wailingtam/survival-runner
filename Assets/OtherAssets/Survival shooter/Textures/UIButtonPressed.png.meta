@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 997c5c17c1c4b8e45b6a1c47799ddeb0
+guid: 9f039151f1a3b417b850d090af516942
 TextureImporter:
   fileIDToRecycleName:
     21300000: GUIButtonPressed
@@ -37,6 +37,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -62,3 +63,4 @@ TextureImporter:
   spritePackingTag: 
   userData: 
   assetBundleName: 
+  assetBundleVariant: 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a7bed68887a07e34394d4191b3081359
+guid: effec9ddf790b4ee382dabf4cbe37750
 TextureImporter:
   fileIDToRecycleName:
     8900000: generatedCubemap
@@ -36,6 +36,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
@@ -51,3 +52,4 @@ TextureImporter:
   spritePackingTag: 
   userData: 
   assetBundleName: 
+  assetBundleVariant: 

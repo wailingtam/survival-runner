@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 90ee7b540ee22b84fb50965ff82a5d28
+guid: 974034132b6724c3f92aa23cd9a7664e
 TextureImporter:
   fileIDToRecycleName:
     21300000: GUIToggleButton
@@ -37,6 +37,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
@@ -52,3 +53,4 @@ TextureImporter:
   spritePackingTag: 
   userData: 
   assetBundleName: 
+  assetBundleVariant: 

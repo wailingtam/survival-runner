@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 72d2e042768206b46bb11e99674a6a2d
+guid: ab0c903c685a44181b0b294edff43dc2
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
@@ -35,6 +35,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
@@ -50,3 +51,4 @@ TextureImporter:
   spritePackingTag: 
   userData: 
   assetBundleName: 
+  assetBundleVariant: 

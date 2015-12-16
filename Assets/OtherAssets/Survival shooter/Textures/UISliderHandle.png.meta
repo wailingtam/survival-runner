@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aeb818ab889bcd24199891c3cbbc6e47
+guid: f63f6f748c7eb4ec38bf596bd24b8b2d
 TextureImporter:
   fileIDToRecycleName:
     21300000: GUISliderHandle
@@ -37,6 +37,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
@@ -52,3 +53,4 @@ TextureImporter:
   spritePackingTag: 
   userData: 
   assetBundleName: 
+  assetBundleVariant: 

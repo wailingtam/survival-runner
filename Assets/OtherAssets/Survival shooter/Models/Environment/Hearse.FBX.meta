@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a61ec2d2f7d16b04aa9b4ab2ba9095c9
+guid: 143cbcb0ac70d4dee9313951a015d1cc
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
@@ -18,7 +18,10 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
-    pivotNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
@@ -62,8 +65,11 @@ ModelImporter:
     legStretch: .0500000007
     feetSpacing: 0
     rootMotionBoneName: 
+    hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
+  assetBundleVariant: 

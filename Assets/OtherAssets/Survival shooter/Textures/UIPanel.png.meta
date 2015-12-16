@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a5a780e4a881ea44f88afed421a63c3a
+guid: f96e622b1ff0041d8af0e71f923d5060
 TextureImporter:
   fileIDToRecycleName:
     21300000: GUIPanel
@@ -37,6 +37,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -62,3 +63,4 @@ TextureImporter:
   spritePackingTag: 
   userData: 
   assetBundleName: 
+  assetBundleVariant: 

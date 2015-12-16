@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 236d996a6f89832458bce35d9d4a268b
+guid: f567d31ea11e844949822143231d3c60
 TextureImporter:
   fileIDToRecycleName:
     21300000: GUISliderBG
@@ -37,6 +37,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -62,3 +63,4 @@ TextureImporter:
   spritePackingTag: 
   userData: 
   assetBundleName: 
+  assetBundleVariant: 

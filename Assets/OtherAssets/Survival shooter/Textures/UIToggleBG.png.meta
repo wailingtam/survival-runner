@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2130698f043fe8149974dbe7b12d1752
+guid: f4c7ea1a8558149b3b4bba2b79b0a939
 TextureImporter:
   fileIDToRecycleName:
     21300000: GUIToggleBG
@@ -37,6 +37,7 @@ TextureImporter:
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
+  allowsAlphaSplitting: 0
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
@@ -52,3 +53,4 @@ TextureImporter:
   spritePackingTag: 
   userData: 
   assetBundleName: 
+  assetBundleVariant: 
