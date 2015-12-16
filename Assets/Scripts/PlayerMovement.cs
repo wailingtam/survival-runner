@@ -36,8 +36,9 @@ public class PlayerMovement : MonoBehaviour
 	//Awake is called regarless the script is enable or not. Good to set up references
 	void Awake()
 	{
-		floorMask = LayerMask.GetMask ("Floor");
-		anim = GetComponent<Animator> ();
+        int platformLayer = LayerMask.NameToLayer("Floor");
+        floorMask = 1 << platformLayer;
+        anim = GetComponent<Animator> ();
 		playerRigidbody = GetComponent<Rigidbody> ();
 		playerHealth = GetComponent <PlayerHealth> ();
         pcamera = GameObject.Find("MainCamera");
@@ -62,15 +63,8 @@ public class PlayerMovement : MonoBehaviour
 		//GetAxisRaw only get -1, 0 or 1 values
 		float v = 1f;
 
-        int platformLayer = LayerMask.NameToLayer("Floor");
-        //Only hit the platform layer
-        int layerMask = 1 << platformLayer;
-        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, 4f , layerMask);
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            playerRigidbody.velocity = new Vector3(0, jumpHeight, 0);
-            isGrounded = false;
-        }
+        bool isGrounded = Physics.Raycast(transform.position + new Vector3(0,0.1f,0), Vector3.down, 0.2f , floorMask);
+        if (Input.GetButtonDown("Jump") && isGrounded) playerRigidbody.velocity = new Vector3(0, jumpHeight, 0);
 
         if (turningZone != null && !hasTurned)
         {
@@ -94,13 +88,9 @@ public class PlayerMovement : MonoBehaviour
             }
             
         }
-
-        
         Turning();
         Animating(v);
         Move(Input.GetKey(KeyCode.A), Input.GetKey(KeyCode.D), v);
-
-
     }
 
 	void Move(bool a, bool d, float v)
