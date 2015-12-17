@@ -26,12 +26,14 @@ public class PlayerMovement : MonoBehaviour
     private float playerVerticalSize;
     Rigidbody playerRigidbody;
 	int floorMask;
-	float camRayLength = 100f; //Length of the ray we cast from the camera
+	//float camRayLength = 100f; //Length of the ray we cast from the camera
 	
 	float timer;
 	float timeBetweenPoints = 0.2f;
 	PlayerHealth playerHealth;
-    
+
+	AudioSource starAudio;
+
 
 	//Awake is called regarless the script is enable or not. Good to set up references
 	void Awake()
@@ -43,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 		playerHealth = GetComponent <PlayerHealth> ();
         pcamera = GameObject.Find("MainCamera");
         plight = GameObject.Find("DirectionalLight");
-        playerVerticalSize = (float) gameObject.GetComponent<CapsuleCollider>().bounds.size.y;
+		playerVerticalSize = (float) gameObject.GetComponent<CapsuleCollider>().bounds.size.y;
 
     }
 
@@ -88,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
             }
             
         }
-        Turning();
+        //Turning();
         Animating(v);
         Move(Input.GetKey(KeyCode.A), Input.GetKey(KeyCode.D), v);
     }
@@ -127,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-	void Turning ()
+	/*void Turning ()
 	{
 		Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 
@@ -142,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
 			Quaternion newRotation = Quaternion.LookRotation (playerToMouse);
 			playerRigidbody.MoveRotation (newRotation);
 		}
-	}
+	}*/
 
 	void Animating (float v)
 	{
@@ -156,8 +158,12 @@ public class PlayerMovement : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
+		
 		if (other.gameObject.CompareTag ("Star")) {
-			Destroy (other.gameObject);
+			starAudio = other.gameObject.GetComponent <AudioSource> ();
+			starAudio.Play();
+			other.gameObject.GetComponent<MeshRenderer>().enabled = false;
+			Destroy (other.gameObject, 0.5f);
 			DisplayManager.stars += 1;
 			DisplayManager.score += 100;
 		} 
@@ -170,7 +176,10 @@ public class PlayerMovement : MonoBehaviour
 			DisplayManager.teddies += 1;
 			DisplayManager.score += 300;
 		}
-		else if (other.gameObject.CompareTag ("Present")) {
+		else if (other.gameObject.CompareTag ("LowObstacle")) {
+			playerHealth.TakeDamage(1);
+		}
+		else if (other.gameObject.CompareTag ("HighObstacle")) {
 			playerHealth.TakeDamage(3);
 		}
         else if (other.gameObject.CompareTag("TurningZoneLeft") || other.gameObject.CompareTag("TurningZoneRight"))

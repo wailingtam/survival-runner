@@ -8,10 +8,6 @@ public class PlayerHealth : MonoBehaviour
 	public Image heart1;
 	public Image heart2;
 	public Image heart3;
-	
-    /*public int startingHealth = 100;
-    public int currentHealth;
-    public Slider healthSlider;*/
     public Image damageImage;
     public AudioClip deathClip;
     public float flashSpeed = 5f;
@@ -33,7 +29,6 @@ public class PlayerHealth : MonoBehaviour
         playerAudio = GetComponent <AudioSource> ();
         playerMovement = GetComponent <PlayerMovement> ();
         playerShooting = GetComponentInChildren <PlayerShooting> ();
-        //currentHealth = startingHealth;
 		currentHealth = 3;
     }
 
@@ -62,11 +57,9 @@ public class PlayerHealth : MonoBehaviour
 			case 2: heart3.enabled = false; break;
 			case 1: heart2.enabled = false; break;
 			case 0: heart1.enabled = false; break;
+		default: heart3.enabled = false; heart2.enabled = false; heart1.enabled = false; break;
+
 		}
-
-        //currentHealth -= amount;
-
-        //healthSlider.value = currentHealth;
 
         playerAudio.Play ();
 
@@ -100,15 +93,6 @@ public class PlayerHealth : MonoBehaviour
 
 	public void Heal ()
 	{
-		/*if (currentHealth < startingHealth) {
-			if (startingHealth - currentHealth < healingAmount) {
-				currentHealth = startingHealth;
-			} else {
-				currentHealth += healingAmount;
-			}
-
-			healthSlider.value = currentHealth;
-		}*/
 		if (currentHealth < 3) {
 			currentHealth += 1;
 		}

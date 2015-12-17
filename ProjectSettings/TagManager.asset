@@ -7,7 +7,7 @@ TagManager:
   - Star
   - Player
   - Medipack
-  - Obstacle
+  - LowObstacle
   - Present
   - TeddyBear
   - TurningZoneLeft
@@ -20,6 +20,7 @@ TagManager:
   - ZomBear
   - ZomBunny
   - Hellephant
+  - HighObstacle
   layers:
   - Default
   - TransparentFX
