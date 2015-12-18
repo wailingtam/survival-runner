@@ -28,7 +28,9 @@ public class ObjectManager : MonoBehaviour {
 
     void OnEnable()
     {
-        Vector3 direction = (transform.Find("TurningZone").position - transform.Find("ZoneIn").position).normalized;
+        Vector3 finalLengthPosition = transform.Find("TurningZone") != null ?
+            transform.Find("TurningZone").position : transform.Find("ZoneOutPos").position;
+        Vector3 direction = (finalLengthPosition - transform.Find("ZoneIn").position).normalized;
         DestroyAll(starString);
         DestroyAll(medipackString);
         DestroyAll(teddybearString);
@@ -43,13 +45,13 @@ public class ObjectManager : MonoBehaviour {
         SpawnMultiple(hellephant, hellephantString + spawnsFolderSuffix, direction);
     }
 	
-    private void DestroyAll(string pickupType)
+    public void DestroyAll(string pickupType)
     {
         foreach(GameObject pickup in GameObject.FindGameObjectsWithTag(pickupType)) Destroy(pickup);
     }
 
 
-    private void SpawnMultiple(Object pickup, string spawnFolder, Vector3 direction)
+    public void SpawnMultiple(Object pickup, string spawnFolder, Vector3 direction, HellZoneMain hell=null)
     {
         Transform folder = transform.Find(spawnFolder);
         if(folder != null)
@@ -63,6 +65,8 @@ public class ObjectManager : MonoBehaviour {
                     newPickup.transform.parent = gameObject.transform;  //If this script is executed before
                     //The script that turns the zone, we want the stars to turn and position with the zone, so we
                     //Set them as children
+                    EnemyHealth eh = newPickup.GetComponent<EnemyHealth>();
+                    if (eh != null) eh.hell = hell;
                 }
             }
         }

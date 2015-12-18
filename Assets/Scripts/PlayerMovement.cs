@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private float MARGIN = 8f;
     public bool isGrounded = true;
     public int direction = 0;
+    public float v = 1f;
 
     public float smoothTime = 0.5f;
     public Vector3 velocity = Vector3.zero;
@@ -63,20 +64,28 @@ public class PlayerMovement : MonoBehaviour
 	{
         //todo switch estats i després comprobar inputs
 		//GetAxisRaw only get -1, 0 or 1 values
-		float v = 1f;
 
-        bool isGrounded = Physics.Raycast(transform.position + new Vector3(0,0.1f,0), Vector3.down, 0.2f , floorMask);
-        if (Input.GetButtonDown("Jump") && isGrounded) playerRigidbody.velocity = new Vector3(0, jumpHeight, 0);
+        Vector3 positionToMeasure = transform.position + new Vector3(0, 0.1f, 0);
+        bool isGrounded = Physics.Raycast(positionToMeasure, Vector3.down, 0.2f , floorMask);
+        bool fallingToEmptyness = positionToMeasure.y < -5f && !Physics.Raycast(positionToMeasure, Vector3.down, 100f, floorMask);
+        bool crashedInWall = (Physics.Raycast(positionToMeasure, Vector3.left, 0.2f, floorMask)
+                            || Physics.Raycast(positionToMeasure, Vector3.right, 0.2f, floorMask)
+                            || Physics.Raycast(positionToMeasure, Vector3.forward, 0.2f, floorMask)
+                            || Physics.Raycast(positionToMeasure, Vector3.back, 0.2f, floorMask))
+                            && !Physics.Raycast(positionToMeasure, Vector3.down, 100f, floorMask);
+        if (crashedInWall) v = 0; //Let's let gravity to do it's job
+        if (fallingToEmptyness) playerHealth.TakeDamage(playerHealth.currentHealth);
+        if (Input.GetKeyDown(KeyCode.W) && isGrounded) playerRigidbody.velocity = new Vector3(0, jumpHeight, 0);
 
         if (turningZone != null && !hasTurned)
         {
-            if (Input.GetKeyDown(KeyCode.D) && turningZone.gameObject.CompareTag("TurningZoneRight"))
+            if (Input.GetKey(KeyCode.D) && turningZone.gameObject.CompareTag("TurningZoneRight"))
             {
                 transform.Rotate(Vector3.up, 90);
                 direction = (direction + 1) % 4;
                 hasTurned = true;
             }
-            else if(Input.GetKeyDown(KeyCode.A) && turningZone.gameObject.CompareTag("TurningZoneLeft")){
+            else if(Input.GetKey(KeyCode.A) && turningZone.gameObject.CompareTag("TurningZoneLeft")){
                 transform.Rotate(Vector3.up, -90);
                 direction = (direction - 1) % 4;
                 hasTurned = true;
@@ -149,8 +158,7 @@ public class PlayerMovement : MonoBehaviour
 	void Animating (float v)
 	{
 		if (isGrounded) {
-			bool walking = v != 0f;
-			anim.SetBool ("IsWalking", walking);
+			anim.SetBool ("IsWalking", true);
 		} else {
 			anim.SetBool ("IsWalking", false);
 		}
@@ -158,30 +166,35 @@ public class PlayerMovement : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
-		
-		if (other.gameObject.CompareTag ("Star")) {
-			starAudio = other.gameObject.GetComponent <AudioSource> ();
-			starAudio.Play();
-			other.gameObject.GetComponent<MeshRenderer>().enabled = false;
-			Destroy (other.gameObject, 0.5f);
-			DisplayManager.stars += 1;
-			DisplayManager.score += 100;
-		} 
-		else if (other.gameObject.CompareTag ("Medipack")) {
-			Destroy (other.gameObject);
-			playerHealth.Heal();
-		}
-		else if (other.gameObject.CompareTag ("Teddybear")) {
-			Destroy (other.gameObject);
-			DisplayManager.teddies += 1;
-			DisplayManager.score += 300;
-		}
-		else if (other.gameObject.CompareTag ("LowObstacle")) {
-			playerHealth.TakeDamage(1);
-		}
-		else if (other.gameObject.CompareTag ("HighObstacle")) {
-			playerHealth.TakeDamage(3);
-		}
+
+        if (other.gameObject.CompareTag("Star"))
+        {
+            starAudio = other.gameObject.GetComponent<AudioSource>();
+            starAudio.Play();
+            other.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(other.gameObject, 0.5f);
+            DisplayManager.stars += 1;
+            DisplayManager.score += 100;
+        }
+        else if (other.gameObject.CompareTag("Medipack"))
+        {
+            Destroy(other.gameObject);
+            playerHealth.Heal();
+        }
+        else if (other.gameObject.CompareTag("Teddybear"))
+        {
+            Destroy(other.gameObject);
+            DisplayManager.teddies += 1;
+            DisplayManager.score += 300;
+        }
+        else if (other.gameObject.CompareTag("LowObstacle"))
+        {
+            playerHealth.TakeDamage(1);
+        }
+        else if (other.gameObject.CompareTag("HighObstacle"))
+        {
+            playerHealth.TakeDamage(3);
+        }
         else if (other.gameObject.CompareTag("TurningZoneLeft") || other.gameObject.CompareTag("TurningZoneRight"))
         {
             disableHorizontalAxis = true;

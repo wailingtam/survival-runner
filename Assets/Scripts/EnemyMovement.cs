@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemyMovement : MonoBehaviour
 {
-	private float speed = 0.05f;
+	public float speed; //In UI
 
     Transform player;
     PlayerHealth playerHealth;
@@ -46,7 +46,7 @@ public class EnemyMovement : MonoBehaviour
 				distance = player.position.x - transform.position.x;
 			break;
 		}
-		if (distance > 0f) {
+
 		//if ((transform.position.z - player.position.z) > 0f) {
 			if (enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0) {
 				//nav.SetDestination (destination);
@@ -62,13 +62,12 @@ public class EnemyMovement : MonoBehaviour
 			} /*else {
 				nav.enabled = false;
 			}*/
-		} else {
-			if (enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0 && !damaged) {
+
+			if (distance <= 0f && enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0 && !damaged) {
 				damaged = true;
 				//nav.enabled = false;
 				playerHealth.TakeDamage(1);
-	        	Destroy (gameObject, 2f);
+	        	Destroy (gameObject, 1.5f);
 			}
 		}
-    }
 }

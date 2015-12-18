@@ -2,11 +2,13 @@
 
 public class EnemyHealth : MonoBehaviour
 {
-    private int startingHealth = 60;
+    public int startingHealth = 60;
     public int currentHealth;
     public float sinkSpeed = 2.5f;
     public int scoreValue = 300;
     public AudioClip deathClip;
+
+    public HellZoneMain hell;
 
 
     Animator anim;
@@ -60,12 +62,16 @@ public class EnemyHealth : MonoBehaviour
     {
         isDead = true;
 
+
         capsuleCollider.isTrigger = true;
+        if (hell != null) hell.AddKill();
 
         anim.SetTrigger ("Dead");
 
         enemyAudio.clip = deathClip;
         enemyAudio.Play ();
+
+        
     }
 
 

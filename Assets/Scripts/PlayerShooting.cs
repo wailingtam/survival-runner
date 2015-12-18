@@ -33,7 +33,7 @@ public class PlayerShooting : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-		if(Input.GetKeyDown(KeyCode.RightAlt) && timer >= timeBetweenBullets && Time.timeScale != 0)
+		if(Input.GetKeyDown(KeyCode.Space) && timer >= timeBetweenBullets && Time.timeScale != 0)
         {
             Shoot ();
         }
