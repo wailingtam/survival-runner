@@ -23,7 +23,7 @@ public class HellZoneMain : MonoBehaviour {
     AudioSource backgroundMusic;
     float rot = 0;
     public int kills = 0;
-    private int NEED_KILLS = 2;
+    private int NEED_KILLS = 10;
     private bool last = false, executed = false;
     Material ground;
 
@@ -135,11 +135,11 @@ public class HellZoneMain : MonoBehaviour {
         }
         else
         {
-            Invoke("Spawn", kills > NEED_KILLS / 2 ? 1 : 2);
-            int rows = Random.Range(1, 3);
+            Invoke("Spawn", kills > NEED_KILLS / 2 ? 0.9f : 1.5f);
+            int rows = Random.Range(1, 4);
             Object enemy = Random.Range(0, 3) <= 1 ? zomBear : zomBunny;
             objectManager.SpawnMultiple(enemy, "Spawn" + rows.ToString(), Vector3.zero, this);
-            if (Random.Range(0, 4) == 0) objectManager.SpawnMultiple(zomBear, "Spawn" + ((rows + 1) % 3).ToString(), Vector3.zero, this);
+            if (Random.Range(0, 4) == 0) objectManager.SpawnMultiple(zomBear, "Spawn" + (((rows + 1) % 4)+1).ToString(), Vector3.zero, this);
         }
 
     }

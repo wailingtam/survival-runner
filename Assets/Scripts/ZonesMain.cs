@@ -9,7 +9,7 @@ public class ZonesMain : MonoBehaviour {
     int activeNewZoneIndex = 0;
     System.Random rnd = new System.Random();
     private int count = 0;
-    public int num_zones_until_hell = 1;
+    private int num_zones_until_hell = 1;
 
     void Awake () {
 	}

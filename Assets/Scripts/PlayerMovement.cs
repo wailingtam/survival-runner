@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject pcamera, plight;
     private float speed = 400f;
 	private float jumpHeight = 15f;
-    private float MARGIN = 8.5f;
+    private float MARGIN = 8.7f;
     public bool isGrounded = true;
     public int direction = 0;
     public float v = 1f;
