@@ -43,7 +43,6 @@ GameObject:
   - 4: {fileID: 441124}
   - 95: {fileID: 9579996}
   - 54: {fileID: 5485832}
-  - 195: {fileID: 19580350}
   - 82: {fileID: 8211798}
   - 135: {fileID: 13563478}
   - 136: {fileID: 13666044}
@@ -220,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0294a3be873e143e797fc54e5ead74d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: .699999988
+  speed: 17
 --- !u!114 &11476446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -232,9 +231,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c526dc7f7cea448dafa26ede6400cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingHealth: 60
   currentHealth: 0
   sinkSpeed: 2.5
-  scoreValue: 10
+  scoreValue: 400
   deathClip: {fileID: 8300000, guid: 1d3bfb9269f136947bf8ac164cace1ff, type: 3}
   hell: {fileID: 0}
 --- !u!135 &13563478
@@ -281,7 +281,9 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -298,26 +300,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -.135538757, y: -.751277804, z: .0813802779}
     m_Extent: {x: .802468836, y: .925892711, z: .537433505}
   m_DirtyAABB: 0
---- !u!195 &19580350
-NavMeshAgent:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 194788}
-  m_Enabled: 0
-  m_Radius: .300000012
-  m_Speed: 3
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1.29999995
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1.10000002
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!198 &19829772
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1389,7 +1371,9 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_MinimumChartSize: 4
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -1432,11 +1416,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: speed
-      value: .699999988
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: ZomBunny
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: scoreValue
+      value: 400
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

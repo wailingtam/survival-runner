@@ -11,9 +11,7 @@ public class ZonesMain : MonoBehaviour {
     private int count = 0;
     public int num_zones_until_hell = 1;
 
-    // Use this for initialization
-    void Start () {
-
+    void Awake () {
 	}
 	
 	// Update is called once per frame

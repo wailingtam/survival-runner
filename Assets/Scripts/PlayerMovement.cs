@@ -3,9 +3,9 @@
 public class PlayerMovement : MonoBehaviour
 {
     private GameObject pcamera, plight;
-    private float speed = 8f;
+    private float speed = 400f;
 	private float jumpHeight = 15f;
-    private float MARGIN = 8f;
+    private float MARGIN = 8.5f;
     public bool isGrounded = true;
     public int direction = 0;
     public float v = 1f;
@@ -34,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
 	PlayerHealth playerHealth;
 
 	AudioSource starAudio;
+	AudioSource teddyAudio;
+	AudioSource medipackAudio;
 
 
 	//Awake is called regarless the script is enable or not. Good to set up references
@@ -133,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
             case 2: movement.Set(-marginToDo, 0f, -v); break;
             default: movement.Set(-v, 0f, marginToDo); break;
         }
-		movement = movement * speed;
+		movement = movement * speed * Time.deltaTime;
         playerRigidbody.MovePosition (Vector3.SmoothDamp(transform.position, transform.position + movement, ref velocity, smoothTime));
 
     }
@@ -172,18 +174,24 @@ public class PlayerMovement : MonoBehaviour
             starAudio = other.gameObject.GetComponent<AudioSource>();
             starAudio.Play();
             other.gameObject.GetComponent<MeshRenderer>().enabled = false;
-            Destroy(other.gameObject, 0.5f);
+            Destroy(other.gameObject, 1f);
             DisplayManager.stars += 1;
             DisplayManager.score += 100;
         }
         else if (other.gameObject.CompareTag("Medipack"))
         {
-            Destroy(other.gameObject);
+			medipackAudio = other.gameObject.GetComponent<AudioSource>();
+			medipackAudio.Play ();
+            other.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(other.gameObject, 1f);
             playerHealth.Heal();
         }
         else if (other.gameObject.CompareTag("Teddybear"))
         {
-            Destroy(other.gameObject);
+			teddyAudio = other.gameObject.GetComponent<AudioSource>();
+			teddyAudio.Play ();
+			other.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(other.gameObject, 1f);
             DisplayManager.teddies += 1;
             DisplayManager.score += 300;
         }
@@ -194,7 +202,11 @@ public class PlayerMovement : MonoBehaviour
         else if (other.gameObject.CompareTag("HighObstacle"))
         {
             playerHealth.TakeDamage(3);
-        }
+		}
+		else if (other.gameObject.CompareTag("Present"))
+		{
+			playerHealth.TakeDamage(3);
+		}
         else if (other.gameObject.CompareTag("TurningZoneLeft") || other.gameObject.CompareTag("TurningZoneRight"))
         {
             disableHorizontalAxis = true;

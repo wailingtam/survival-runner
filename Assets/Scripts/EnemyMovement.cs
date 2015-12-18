@@ -57,7 +57,7 @@ public class EnemyMovement : MonoBehaviour
 					case 2: movement.Set(0f, 0f, -1f); break;
 					default: movement.Set(-1f, 0f, 0f); break;
 				}
-				movement = movement * speed;
+				movement = movement * speed * Time.deltaTime;
 				enemyRigidbody.MovePosition (transform.position - movement);
 			} /*else {
 				nav.enabled = false;
